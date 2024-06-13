@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "meepmrp"
+version = "0.1.0"
+description = ""
+authors = ["Jasper Chan <jasperchan515@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.111.0"
+pony = "^0.7.17"
+pydantic = "^2.7.3"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+pyjwt = {extras = ["crypto"], version = "^2.8.0"}
+
+
+[tool.poetry.group.dev.dependencies]
+requests = "^2.32.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
