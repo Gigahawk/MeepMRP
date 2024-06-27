@@ -1,3 +1,4 @@
+from functools import cache
 from datetime import datetime, timedelta, timezone
 
 import jwt
@@ -19,6 +20,7 @@ def get_token(username: str) -> str:
     print(data)
     return jwt.encode(data, _jwt_secret, algorithm=_jwt_algo)
 
+@cache
 def get_user_from_token(token: str) -> str | None:
     payload = jwt.decode(token, _jwt_secret, algorithms=[_jwt_algo])
     username: str = payload.get("user", None)

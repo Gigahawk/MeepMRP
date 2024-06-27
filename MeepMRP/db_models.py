@@ -51,15 +51,14 @@ class Part(db.Entity):
 
 
 class Tag(db.Entity):
-    id = PrimaryKey(int, auto=True)
-    name = Optional(str)
+    name = PrimaryKey(str)
     parts = Set(Part)
 
 
 class UserGroup(db.Entity):
+    name = PrimaryKey(str)
     users = Set(User)
     parts = Set(Part)
-    name = PrimaryKey(str)
 
 
 class BomItem(db.Entity):
