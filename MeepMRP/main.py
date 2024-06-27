@@ -7,7 +7,7 @@ from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from MeepMRP.db_actions import (
     admin_exists, user_exists, create_user, authenticate_user
 )
-from MeepMRP.pydantic_models import User, Token
+from MeepMRP.pydantic_models import User, Token, ServerInfo
 from MeepMRP.security import password_ctx, get_token, get_user_from_token
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
@@ -23,9 +23,14 @@ app.add_middleware(
     allow_headers = ["*"],
 )
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
-    if token == "0":
-        return User(username="")
+@app.get("/info")
+async def get_server_info() -> ServerInfo:
+    return ServerInfo(api_version=0)
+
+@app.get("/users/me")
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> User:
+    #if token == "0":
+    #    return User(username="")
     username = get_user_from_token(token)
     if not user_exists(username):
         raise HTTPException(status_code=401, detail="Invalid access token")

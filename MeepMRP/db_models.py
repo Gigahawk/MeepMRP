@@ -6,8 +6,7 @@ db = Database()
 
 
 class User(db.Entity):
-    id = PrimaryKey(int, auto=True)
-    username = Optional(str)
+    username = PrimaryKey(str)
     user_groups = Set('UserGroup')
     ecos = Set('Eco', reverse='author')
     eco_approvals = Set('Eco', reverse='approvals')
@@ -45,8 +44,7 @@ class PartRevision(BasePart):
 
 
 class Part(db.Entity):
-    id = PrimaryKey(int, auto=True)
-    part_number = Optional(str)
+    part_number = PrimaryKey(str)
     part_revisions = Set(PartRevision)
     tags = Set('Tag')
     reviewers = Set('UserGroup')
@@ -59,9 +57,9 @@ class Tag(db.Entity):
 
 
 class UserGroup(db.Entity):
-    id = PrimaryKey(int, auto=True)
     users = Set(User)
     parts = Set(Part)
+    name = PrimaryKey(str)
 
 
 class BomItem(db.Entity):
@@ -130,6 +128,7 @@ class StockLocation(db.Entity):
     parent = Required('StockLocation', reverse='children')
     children = Set('StockLocation', reverse='parent')
     stock_items = Set(StockItem)
+
 
 set_sql_debug(True)
 
